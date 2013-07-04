@@ -19,6 +19,8 @@ Data
 *.o
 *.exe
 *.bin
+*.dol
+*.elf
 
 # Build #
 *.ncb
