@@ -1,0 +1,46 @@
+# Directories #
+Obj
+obj
+Bin
+bin
+Lib
+lib
+Debug
+debug
+Release
+release
+Profile
+profile
+ipch
+Data
+
+# Complied #
+*.obj
+*.o
+*.exe
+*.bin
+
+# Build #
+*.ncb
+*.suo
+*.user
+*.sdf
+*.opensdf
+*.aps
+*.pch
+
+# Temporary Vim #
+*.swp
+*.swo
+*.swn
+*.vim
+
+# Diffing temporary files #
+*.orig
+
+# Documentation #
+*.~lock.*
+*.docstates
+
+# Git version header #
+GitVersion.hpp
