@@ -4,7 +4,6 @@
 #include <malloc.h>
 #include <ogcsys.h>
 #include <gccore.h>
-#include <GitVersion.h>
 
 #define DEFAULT_FIFO_SIZE	( 256*1024 )
 static void *g_sppFrameBuffer[ 2 ] = { NULL, NULL };
