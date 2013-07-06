@@ -4,6 +4,7 @@
 #include <malloc.h>
 #include <ogcsys.h>
 #include <gccore.h>
+#include <GitVersion.h>
 
 static void *xfb = NULL;
 static GXRModeObj *rmode = NULL;
@@ -14,7 +15,8 @@ int main(int argc, char **argv) {
 
 	xfb = Initialise();
 
-	printf("\nHello World!\n");
+	printf("\nTwenty|One\n");
+	printf( "\nRevision: %s\n", GIT_COMMITHASH );
 
 	while(1) {
 

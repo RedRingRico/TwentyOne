@@ -47,7 +47,6 @@ LIBDIRS	:=
 #---------------------------------------------------------------------------------
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 #---------------------------------------------------------------------------------
-
 export OUTPUT	:=	$(CURDIR)/$(TARGET)
 
 export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir)) \
@@ -97,6 +96,12 @@ export OUTPUT	:=	$(CURDIR)/$(TARGET)
 #---------------------------------------------------------------------------------
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
+	@[ -d Headers ] || mkdir -p Headers
+	@printf "%s" "------------------------- Generating Version Information ---"
+	@printf "%s\n" "-------------------"
+	@sh ./GitVersion.sh ./Headers/GitVersion.h
+	@printf "%s" "------------------------------------------------------------"
+	@printf "%s\n" "-------------------"
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 #---------------------------------------------------------------------------------
