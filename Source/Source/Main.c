@@ -6,6 +6,7 @@
 #include <gccore.h>
 #include <math.h>
 #include <Renderer.h>
+#include <Grid.h>
 
 int main( int argc, char **argv )
 {
@@ -21,6 +22,7 @@ int main( int argc, char **argv )
 	f32			Width;
 	f32			Height;
 	float		XPos = 0.0f;
+	float		YPos = 100.0f;
 	float		ZPos = 0.0f;
 	float		YRot = 0.0f;
 	f32			Look = 0.0f;
@@ -51,6 +53,7 @@ int main( int argc, char **argv )
 	GX_LoadProjectionMtx( PerspectiveMatrix, GX_PERSPECTIVE );
 
 	guMtxIdentity( ModelViewMatrix );
+	Look = 90.0f;
 
 	while( 1 )
 	{
@@ -107,8 +110,40 @@ int main( int argc, char **argv )
 		{
 			exit( 0 );
 		}
+
+		if( PAD_ButtonsHeld( 0 ) & PAD_BUTTON_UP )
+		{
+			YPos += 0.1f;
+		}
+		if( PAD_ButtonsHeld( 0 ) & PAD_BUTTON_DOWN )
+		{
+			YPos -= 0.1f;
+		}
+		
 		oneBeginScene( );
 
+		SceneRotY = 360.0f - YRot;
+
+		RotAxis.x = 1.0f;
+		RotAxis.y = 0.0f;
+		RotAxis.z = 0.0f;
+		guMtxIdentity( ModelMatrix );
+		guMtxRotAxisDeg( ModelMatrix, &RotAxis, Look );
+		guMtxConcat( ModelMatrix, ViewMatrix, ModelViewMatrix );
+
+		RotAxis.x = 0.0f;
+		RotAxis.y = 1.0f;
+		RotAxis.z = 0.0f;
+		guMtxIdentity( ModelMatrix );
+		guMtxRotAxisDeg( ModelMatrix, &RotAxis, SceneRotY );
+		guMtxConcat( ModelViewMatrix, ModelMatrix, ModelViewMatrix );
+
+
+		guMtxApplyTrans( ModelViewMatrix, TmpMatrix, -XPos, -YPos, -ZPos );
+
+		GX_LoadPosMtxImm( TmpMatrix, GX_PNMTX0 );
+		oneDrawGrid( 100.0f, 100.0f, 10.0f );
+/*
 		SceneRotY = 360.0f - YRot;
 
 		RotAxis.x = 1.0f;
@@ -134,8 +169,7 @@ int main( int argc, char **argv )
 		GX_LoadPosMtxImm( TmpMatrix, GX_PNMTX0 );
 
 		GX_Begin( GX_TRIANGLES, GX_VTXFMT0, 36 );
-
-			/* Front */
+			/* Front *
 			GX_Position3f32( -1.0f, 1.0f, 1.0f );
 			GX_Color3u8( 255, 0, 0 );
 			GX_Position3f32( 1.0f, 1.0f, 1.0f );
@@ -151,7 +185,7 @@ int main( int argc, char **argv )
 			GX_Color3u8( 255, 0, 0 );
 			
 
-			/* Back */
+			/* Back *
 			GX_Position3f32( 1.0f, 1.0f, -1.0f );
 			GX_Color3u8( 0, 255, 0 );
 			GX_Position3f32( -1.0f, 1.0f, -1.0f );
@@ -167,7 +201,7 @@ int main( int argc, char **argv )
 			GX_Color3u8( 0, 255, 0 );
 			
 			
-			/* Left */
+			/* Left *
 			GX_Position3f32( -1.0f, 1.0f, -1.0f );
 			GX_Color3u8( 0, 0, 255 );
 			GX_Position3f32( -1.0f, 1.0f, 1.0f );
@@ -183,7 +217,7 @@ int main( int argc, char **argv )
 			GX_Color3u8( 0, 0, 255 );
 			
 
-			/* Right */
+			/* Right *
 			GX_Position3f32( 1.0f, 1.0f, 1.0f );
 			GX_Color3u8( 255, 255, 0 );
 			GX_Position3f32( 1.0f, 1.0f, -1.0f );
@@ -199,7 +233,7 @@ int main( int argc, char **argv )
 			GX_Color3u8( 255, 255, 0 );
 			
 
-			/* Top */
+			/* Top *
 			GX_Position3f32( -1.0f, 1.0f, -1.0f );
 			GX_Color3u8( 255, 0, 255 );
 			GX_Position3f32( 1.0f, 1.0f, -1.0f );
@@ -215,7 +249,7 @@ int main( int argc, char **argv )
 			GX_Color3u8( 255, 0, 255 );
 			
 
-			/* Bottom */
+			/* Bottom *
 			GX_Position3f32( -1.0f, -1.0f, -1.0f );
 			GX_Color3u8( 255, 255, 255 );
 			GX_Position3f32( 1.0f, -1.0f, -1.0f );
@@ -229,7 +263,7 @@ int main( int argc, char **argv )
 			GX_Color3u8( 255, 255, 255 );
 			GX_Position3f32( -1.0f, -1.0f, 1.0f );
 			GX_Color3u8( 255, 255, 255 );
-		GX_End( );
+		GX_End( );*/
 
 		oneEndScene( );
 	}
