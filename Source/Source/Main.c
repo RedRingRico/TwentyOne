@@ -25,6 +25,8 @@ int main( int argc, char **argv )
 	float		YPos = 100.0f;
 	float		ZPos = 0.0f;
 	float		YRot = 0.0f;
+	float		ModelPosX = 0.0f;
+	float		ModelPosZ = 0.0f;
 	f32			Look = 0.0f;
 	f32			ZDepth = 0.0f;
 	f32			SceneRotY = 0.0f;
@@ -66,25 +68,25 @@ int main( int argc, char **argv )
 		Pad = PAD_StickX( 0 );
 		if( Pad > 50 )
 		{
-			XPos += ( float )cos( DegToRad( YRot ) ) * 0.05f;
-			ZPos -= ( float )sin( DegToRad( YRot ) ) * 0.05f;
+			ModelPosX += ( float )cos( DegToRad( YRot ) ) * 0.05f;
+			ModelPosZ -= ( float )sin( DegToRad( YRot ) ) * 0.05f;
 		}
 		if( Pad < -50 )
 		{
-			XPos -= ( float )cos( DegToRad( YRot ) ) * 0.05f;
-			ZPos += ( float )sin( DegToRad( YRot ) ) * 0.05f;
+			ModelPosX -= ( float )cos( DegToRad( YRot ) ) * 0.05f;
+			ModelPosZ += ( float )sin( DegToRad( YRot ) ) * 0.05f;
 		}
 
 		Pad = PAD_StickY( 0 );
 		if( Pad > 50 )
 		{
-			XPos -= ( float )sin( DegToRad( YRot ) ) * 0.05f;
-			ZPos -= ( float )cos( DegToRad( YRot ) ) * 0.05f;
+			ModelPosX -= ( float )sin( DegToRad( YRot ) ) * 0.05f;
+			ModelPosZ -= ( float )cos( DegToRad( YRot ) ) * 0.05f;
 		}
 		if( Pad < -50 )
 		{
-			XPos += ( float )sin( DegToRad( YRot ) ) * 0.05f;
-			ZPos += ( float )cos( DegToRad( YRot ) ) * 0.05f;
+			ModelPosX += ( float )sin( DegToRad( YRot ) ) * 0.05f;
+			ModelPosZ += ( float )cos( DegToRad( YRot ) ) * 0.05f;
 		}
 
 		Pad = PAD_SubStickY( 0 );
@@ -138,12 +140,11 @@ int main( int argc, char **argv )
 		guMtxRotAxisDeg( ModelMatrix, &RotAxis, SceneRotY );
 		guMtxConcat( ModelViewMatrix, ModelMatrix, ModelViewMatrix );
 
-
 		guMtxApplyTrans( ModelViewMatrix, TmpMatrix, -XPos, -YPos, -ZPos );
 
 		GX_LoadPosMtxImm( TmpMatrix, GX_PNMTX0 );
 		oneDrawGrid( 100.0f, 100.0f, 10.0f );
-/*
+
 		SceneRotY = 360.0f - YRot;
 
 		RotAxis.x = 1.0f;
@@ -161,15 +162,15 @@ int main( int argc, char **argv )
 		guMtxConcat( ModelViewMatrix, ModelMatrix, ModelViewMatrix );
 
 		guMtxIdentity( ModelMatrix );
-		guMtxApplyTrans( ModelMatrix, ModelMatrix, 0.0f, 0.0f, -10.0f );
+		guMtxApplyTrans( ModelMatrix, ModelMatrix, ModelPosX, 0.0f, ModelPosZ );
 		guMtxConcat( ModelViewMatrix, ModelMatrix, ModelViewMatrix );
 
-		guMtxApplyTrans( ModelViewMatrix, TmpMatrix, -XPos, 0.0f, -ZPos );
+		guMtxApplyTrans( ModelViewMatrix, TmpMatrix, -XPos, -YPos, -ZPos );
 
 		GX_LoadPosMtxImm( TmpMatrix, GX_PNMTX0 );
 
 		GX_Begin( GX_TRIANGLES, GX_VTXFMT0, 36 );
-			/* Front *
+			/* Front */
 			GX_Position3f32( -1.0f, 1.0f, 1.0f );
 			GX_Color3u8( 255, 0, 0 );
 			GX_Position3f32( 1.0f, 1.0f, 1.0f );
@@ -185,7 +186,7 @@ int main( int argc, char **argv )
 			GX_Color3u8( 255, 0, 0 );
 			
 
-			/* Back *
+			/* Back */
 			GX_Position3f32( 1.0f, 1.0f, -1.0f );
 			GX_Color3u8( 0, 255, 0 );
 			GX_Position3f32( -1.0f, 1.0f, -1.0f );
@@ -201,7 +202,7 @@ int main( int argc, char **argv )
 			GX_Color3u8( 0, 255, 0 );
 			
 			
-			/* Left *
+			/* Left */
 			GX_Position3f32( -1.0f, 1.0f, -1.0f );
 			GX_Color3u8( 0, 0, 255 );
 			GX_Position3f32( -1.0f, 1.0f, 1.0f );
@@ -217,7 +218,7 @@ int main( int argc, char **argv )
 			GX_Color3u8( 0, 0, 255 );
 			
 
-			/* Right *
+			/* Right */
 			GX_Position3f32( 1.0f, 1.0f, 1.0f );
 			GX_Color3u8( 255, 255, 0 );
 			GX_Position3f32( 1.0f, 1.0f, -1.0f );
@@ -233,7 +234,7 @@ int main( int argc, char **argv )
 			GX_Color3u8( 255, 255, 0 );
 			
 
-			/* Top *
+			/* Top */
 			GX_Position3f32( -1.0f, 1.0f, -1.0f );
 			GX_Color3u8( 255, 0, 255 );
 			GX_Position3f32( 1.0f, 1.0f, -1.0f );
@@ -249,7 +250,7 @@ int main( int argc, char **argv )
 			GX_Color3u8( 255, 0, 255 );
 			
 
-			/* Bottom *
+			/* Bottom */
 			GX_Position3f32( -1.0f, -1.0f, -1.0f );
 			GX_Color3u8( 255, 255, 255 );
 			GX_Position3f32( 1.0f, -1.0f, -1.0f );
@@ -263,7 +264,7 @@ int main( int argc, char **argv )
 			GX_Color3u8( 255, 255, 255 );
 			GX_Position3f32( -1.0f, -1.0f, 1.0f );
 			GX_Color3u8( 255, 255, 255 );
-		GX_End( );*/
+		GX_End( );
 
 		oneEndScene( );
 	}
