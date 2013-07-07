@@ -1,6 +1,6 @@
 #include <Renderer.h>
 
-static GX_RENDERER g_Renderer;
+GX_RENDERER g_Renderer;
 
 u32 oneInitialiseRenderer( void )
 {
@@ -63,12 +63,12 @@ u32 oneInitialiseRenderer( void )
 
 void oneBeginScene( void )
 {
+	GX_SetViewport( 0, 0, g_Renderer.pRenderMode->fbWidth,
+		g_Renderer.pRenderMode->efbHeight, 0, 1 );
 }
 
 void oneEndScene( void )
 {
-	GX_SetViewport( 0, 0, g_Renderer.pRenderMode->fbWidth,
-		g_Renderer.pRenderMode->efbHeight, 0, 1 );
 	GX_DrawDone( );
 	g_Renderer.FrameBufferIndex ^= 1;
 	GX_SetZMode( GX_TRUE, GX_LEQUAL, GX_TRUE );

@@ -15,6 +15,7 @@ typedef struct __tagGX_RENDERER
 	GXColor ClearColour;
 	void *pFIFO;
 }GX_RENDERER;
+extern GX_RENDERER g_Renderer;
 
 u32 oneInitialiseRenderer( void );
 void oneBeginScene( void );
