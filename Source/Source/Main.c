@@ -125,6 +125,10 @@ int main( int argc, char **argv )
 		guMtxRotAxisDeg( ModelMatrix, &RotAxis, SceneRotY );
 		guMtxConcat( ModelViewMatrix, ModelMatrix, ModelViewMatrix );
 
+		guMtxIdentity( ModelMatrix );
+		guMtxApplyTrans( ModelMatrix, ModelMatrix, 0.0f, 0.0f, -10.0f );
+		guMtxConcat( ModelViewMatrix, ModelMatrix, ModelViewMatrix );
+
 		guMtxApplyTrans( ModelViewMatrix, TmpMatrix, -XPos, 0.0f, -ZPos );
 
 		GX_LoadPosMtxImm( TmpMatrix, GX_PNMTX0 );
