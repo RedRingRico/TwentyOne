@@ -14,6 +14,7 @@ int main( int argc, char **argv )
 	guVector	CameraLook = { 0.0f, 0.0f, -1.0f };
 	guVector	CameraUp = { 0.0f, 1.0f, 0.0f };
 	guVector	RotAxis;
+	GXColor		Red = { 0xBD, 0x00, 0x00, 0xFF };
 	Mtx			ViewMatrix;
 	Mtx			ModelMatrix;
 	Mtx			ModelViewMatrix;
@@ -168,9 +169,11 @@ int main( int argc, char **argv )
 		guMtxApplyTrans( ModelViewMatrix, TmpMatrix, -XPos, -YPos, -ZPos );
 
 		GX_LoadPosMtxImm( TmpMatrix, GX_PNMTX0 );
+		oneDrawCube( Red );
+		/*
 
 		GX_Begin( GX_TRIANGLES, GX_VTXFMT0, 36 );
-			/* Front */
+			/* Front *
 			GX_Position3f32( -1.0f, 1.0f, 1.0f );
 			GX_Color3u8( 255, 0, 0 );
 			GX_Position3f32( 1.0f, 1.0f, 1.0f );
@@ -186,7 +189,7 @@ int main( int argc, char **argv )
 			GX_Color3u8( 255, 0, 0 );
 			
 
-			/* Back */
+			/* Back *
 			GX_Position3f32( 1.0f, 1.0f, -1.0f );
 			GX_Color3u8( 0, 255, 0 );
 			GX_Position3f32( -1.0f, 1.0f, -1.0f );
@@ -202,7 +205,7 @@ int main( int argc, char **argv )
 			GX_Color3u8( 0, 255, 0 );
 			
 			
-			/* Left */
+			/* Left *
 			GX_Position3f32( -1.0f, 1.0f, -1.0f );
 			GX_Color3u8( 0, 0, 255 );
 			GX_Position3f32( -1.0f, 1.0f, 1.0f );
@@ -218,7 +221,7 @@ int main( int argc, char **argv )
 			GX_Color3u8( 0, 0, 255 );
 			
 
-			/* Right */
+			/* Right *
 			GX_Position3f32( 1.0f, 1.0f, 1.0f );
 			GX_Color3u8( 255, 255, 0 );
 			GX_Position3f32( 1.0f, 1.0f, -1.0f );
@@ -234,7 +237,7 @@ int main( int argc, char **argv )
 			GX_Color3u8( 255, 255, 0 );
 			
 
-			/* Top */
+			/* Top *
 			GX_Position3f32( -1.0f, 1.0f, -1.0f );
 			GX_Color3u8( 255, 0, 255 );
 			GX_Position3f32( 1.0f, 1.0f, -1.0f );
@@ -250,7 +253,7 @@ int main( int argc, char **argv )
 			GX_Color3u8( 255, 0, 255 );
 			
 
-			/* Bottom */
+			/* Bottom *
 			GX_Position3f32( -1.0f, -1.0f, -1.0f );
 			GX_Color3u8( 255, 255, 255 );
 			GX_Position3f32( 1.0f, -1.0f, -1.0f );
@@ -264,7 +267,7 @@ int main( int argc, char **argv )
 			GX_Color3u8( 255, 255, 255 );
 			GX_Position3f32( -1.0f, -1.0f, 1.0f );
 			GX_Color3u8( 255, 255, 255 );
-		GX_End( );
+		GX_End( );*/
 
 		oneEndScene( );
 	}
